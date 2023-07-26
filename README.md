@@ -46,3 +46,33 @@ sumIntervals( [
 ```
 ### Tests with large intervals
 Your algorithm should be able to handle large intervals. All tested intervals are subsets of the range ```[-1000000000, 1000000000]```.
+### My solution
+```C#
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+public class Intervals
+{
+    public static int SumIntervals((int, int)[] intervals)
+    {
+        var completeIntervals = new List<(int, int)>();
+
+        foreach (var interval in intervals.OrderBy(x => x.Item1).ToArray())
+        {
+            if (interval.Item1 == interval.Item2)
+                continue;
+
+            if (completeIntervals.Count == 0)
+                completeIntervals.Add(interval);
+
+            else if (interval.Item1 <= completeIntervals[^1].Item2)
+                completeIntervals[^1] = new(completeIntervals[^1].Item1, Math.Max(completeIntervals[^1].Item2, interval.Item2));
+
+            else completeIntervals.Add(interval);
+        }
+
+        return completeIntervals.Sum(x => x.Item2 - x.Item1);
+    }
+}
+```
