@@ -69,7 +69,10 @@ public class Intervals
                 completeIntervals.Add(interval);
 
             else if (interval.Item1 <= completeIntervals[^1].Item2)
-                completeIntervals[^1] = new(completeIntervals[^1].Item1, Math.Max(completeIntervals[^1].Item2, interval.Item2));
+            {
+                completeIntervals[^1] = new(completeIntervals[^1].Item1,
+                   Math.Max(completeIntervals[^1].Item2, interval.Item2));
+            }
 
             else completeIntervals.Add(interval);
         }
